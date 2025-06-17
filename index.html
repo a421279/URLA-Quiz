@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>URLA Training Quiz</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; background: #f4f4f4; }
+    h1 { color: #333; }
+    .question { margin-bottom: 20px; background: #fff; padding: 15px; border-radius: 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+    .question h3 { margin: 0 0 10px; }
+    .answers label { display: block; margin-bottom: 5px; }
+    button { padding: 10px 20px; border: none; background: #007BFF; color: white; font-size: 16px; border-radius: 5px; cursor: pointer; }
+    .result { font-weight: bold; margin-top: 20px; }
+    #emailInput { margin-bottom: 20px; padding: 10px; width: 100%; max-width: 300px; }
+  </style>
+</head>
+<body>
+  <h1>URLA Training Quiz</h1>
+  <form id="quizForm">
+    <input type="email" id="emailInput" placeholder="Enter your email to track your score" required />
+
+    <div class="question">
+      <h3>1. What section determines a borrower's legal identity and residency status?</h3>
+      <div class="answers">
+        <label><input type="radio" name="q1" value="Section 1"> Section 1</label>
+        <label><input type="radio" name="q1" value="Section 2"> Section 2</label>
+        <label><input type="radio" name="q1" value="Section 4"> Section 4</label>
+      </div>
+    </div>
+
+    <div class="question">
+      <h3>2. Why is it important to disclose all liabilities and assets?</h3>
+      <div class="answers">
+        <label><input type="radio" name="q2" value="To meet DTI and reserve requirements"> To meet DTI and reserve requirements</label>
+        <label><input type="radio" name="q2" value="To show employment stability"> To show employment stability</label>
+        <label><input type="radio" name="q2" value="For fair lending compliance"> For fair lending compliance</label>
+      </div>
+    </div>
+
+    <div class="question">
+      <h3>3. What is the consequence of incorrect occupancy type?</h3>
+      <div class="answers">
+        <label><input type="radio" name="q3" value="Fraud/repurchase risk"> Fraud/repurchase risk</label>
+        <label><input type="radio" name="q3" value="Higher reserves"> Higher reserves</label>
+        <label><input type="radio" name="q3" value="No effect"> No effect</label>
+      </div>
+    </div>
+
+    <div class="question">
+      <h3>4. Which section reveals bankruptcies, lawsuits, or child support?</h3>
+      <div class="answers">
+        <label><input type="radio" name="q4" value="Section 5"> Section 5</label>
+        <label><input type="radio" name="q4" value="Section 3"> Section 3</label>
+        <label><input type="radio" name="q4" value="Section 9"> Section 9</label>
+      </div>
+    </div>
+
+    <div class="question">
+      <h3>5. What happens if a borrower fails to sign the acknowledgment section?</h3>
+      <div class="answers">
+        <label><input type="radio" name="q5" value="Loan cannot proceed"> Loan cannot proceed</label>
+        <label><input type="radio" name="q5" value="Loan is delayed"> Loan is delayed</label>
+        <label><input type="radio" name="q5" value="No consequence"> No consequence</label>
+      </div>
+    </div>
+
+    <button type="submit">Submit Quiz</button>
+    <div class="result" id="result"></div>
+  </form>
+
+  <script>
+    document.getElementById("quizForm").addEventListener("submit", function(event) {
+      event.preventDefault();
+
+      const email = document.getElementById("emailInput").value.trim();
+      if (!email) {
+        alert("Please enter your email.");
+        return;
+      }
+
+      const correctAnswers = {
+        q1: "Section 1",
+        q2: "To meet DTI and reserve requirements",
+        q3: "Fraud/repurchase risk",
+        q4: "Section 5",
+        q5: "Loan cannot proceed"
+      };
+
+      let score = 0;
+      for (let q in correctAnswers) {
+        const selected = document.querySelector(`input[name="${q}"]:checked`);
+        if (selected && selected.value === correctAnswers[q]) {
+          score++;
+        }
+      }
+
+      const resultText = `Thank you, ${email}. You got ${score} out of 5 correct.`;
+      document.getElementById("result").textContent = resultText;
+
+      // In a real environment, send the score and email to a backend (e.g. via fetch or AJAX)
+      console.log("Tracking result:", { email: email, score: score });
+    });
+  </script>
+</body>
+</html>
